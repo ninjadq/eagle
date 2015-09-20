@@ -1,0 +1,13 @@
+[Unit]
+Description=ssserver
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill ssserver
+ExecStartPre=-/usr/bin/docker rm ssserver
+ExecStart=/usr/bin/docker run --name ssserver -p 8080:8080 ssserver ssserver -c /etc/ShadowSocksServer.json
+
+[Install]
+WantedBy=multi-user.target
